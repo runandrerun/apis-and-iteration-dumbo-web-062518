@@ -10,6 +10,9 @@ def get_character_movies_from_api(character)
 
    char = character_hash["results"].each do |name|
      name["name"].downcase == character ? all_films << name["films"] : nil
+     #if name["name"].downcase == character
+     #all_films << name["films"]
+     #end
    end
   all_films
   gather_film_info(all_films)
