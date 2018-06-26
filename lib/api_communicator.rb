@@ -40,7 +40,7 @@ end
 def parse_character_movies(films_hash)
   counter = 1
   films_hash.each do |title|
-    puts "=== EPISODE #{title[episode_id]} ==="
+    puts "=== EPISODE #{title["episode_id"]} ==="
     puts "#{counter}: #{title["title"]}"
     puts "=== DIRECTOR ==="
     puts "#{title["director"]}"
