@@ -11,11 +11,9 @@ def get_character_from_user
   else
     exit
   end
-
   # if user_input == "quit"
   #   break
   # else
   #   user_input
   # end
-
 end
