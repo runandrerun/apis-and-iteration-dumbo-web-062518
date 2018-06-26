@@ -9,12 +9,11 @@ def get_character_movies_from_api(character)
    character_hash = JSON.parse(all_characters)
 
    char = character_hash["results"].each do |name|
-     if name["name"].downcase == character
-       all_films << name["films"]
-     end
+     name["name"].downcase == character ? all_films << name["films"] : nil
    end
   all_films
   gather_film_info(all_films)
+
   # iterate over the character hash to find the collection of `films` for the given
   #   `character`
   # collect those film API urls, make a web request to each URL to get the info
