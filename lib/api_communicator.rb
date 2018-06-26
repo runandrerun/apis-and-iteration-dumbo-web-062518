@@ -4,9 +4,17 @@ require 'pry'
 
 def get_character_movies_from_api(character)
   #make the web request
-  all_characters = RestClient.get('http://www.swapi.co/api/people/')
-  character_hash = JSON.parse(all_characters)
-  
+   all_films = []
+   all_characters = RestClient.get('http://www.swapi.co/api/people/')
+   character_hash = JSON.parse(all_characters)
+
+   char = character_hash["results"].each do |name|
+     if name["name"].downcase == character
+       all_films << name["films"]
+     end
+   end
+  all_films
+  gather_film_info(all_films)
   # iterate over the character hash to find the collection of `films` for the given
   #   `character`
   # collect those film API urls, make a web request to each URL to get the info
@@ -18,13 +26,37 @@ def get_character_movies_from_api(character)
   #  of movies by title. play around with puts out other info about a given film.
 end
 
+def gather_film_info(all_films)
+  film_info = []
+  all_films.flatten.each do |film_title|
+      rested_films = RestClient.get("#{film_title}")
+      parsed_films = JSON.parse(rested_films)
+      film_info << parsed_films
+    end
+  film_info
+end
+
+
 def parse_character_movies(films_hash)
+  counter = 1
+  films_hash.each do |title|
+    puts "=== TITLE ==="
+    puts "#{counter}: #{title["title"]}"
+    puts "=== DIRECTOR ==="
+    puts "#{title["director"]}"
+    puts "=== RELEASE DATE ==="
+    puts "#{title["release_date"]}"
+    counter += 1
+
+
+  end
   # some iteration magic and puts out the movies in a nice list
 end
 
+
 def show_character_movies(character)
-  films_hash = get_character_movies_from_api(character)
-  parse_character_movies(films_hash)
+ films_hash = get_character_movies_from_api(character)
+ parse_character_movies(films_hash)
 end
 
 ## BONUS
